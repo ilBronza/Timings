@@ -1,0 +1,38 @@
+{
+    "name": "ilbronza/timings",
+    "description": "uikit flash notifications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davide Bronzini",
+            "email": "davide@sistema.srl",
+            "homepage": "https://www.sistema.srl"
+        }
+    ],
+    "homepage": "https://github.com/ilbronza/timings",
+    "keywords": ["Laravel", "Timings"],
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "IlBronza\\Timings\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IlBronza\\Timings\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IlBronza\\Timings\\TimingsServiceProvider"
+            ],
+            "aliases": {
+                "Timings": "IlBronza\\Timings\\Facades\\Timings"
+            }
+        }
+    }
+}
