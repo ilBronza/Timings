@@ -15,7 +15,7 @@ use function lcfirst;
  *
  * Provides shared logic for retrieving configuration and calculating timings.
  */
-abstract class BaseTimingHelper
+class BaseTimingHelper
 {
 	public TimingBaseModel $timingModel;
 
@@ -35,7 +35,6 @@ abstract class BaseTimingHelper
 
 	public Collection $modelChildren;
 
-	abstract static function getHelperConfigTypeName() : string;
 
     /**
      * Build the configuration key path for the current helper and model class.
@@ -145,4 +144,10 @@ abstract class BaseTimingHelper
 	{
 		return $this->baseHourTime;
 	}
+
+	static function getHelperConfigTypeName() : string
+	{
+		return static::$helperTypeName;
+	}
+
 }

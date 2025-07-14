@@ -18,11 +18,6 @@ abstract class TimingEstimator extends BaseTimingHelper
 	abstract function getBaseTime() : float;
 	abstract function getCoefficients() : array;
 
-	static function getHelperConfigTypeName() : string
-	{
-		return static::$helperTypeName;
-	}
-
 	public function provideTimingModel() : TimingBaseModel
 	{
 		return TimingestimationProviderHelper::provide(
