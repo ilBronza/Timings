@@ -2,14 +2,16 @@
 
 namespace IlBronza\Timings;
 
-use IlBronza\Timings\Helpers\TimingestimationProviderHelper;
+use IlBronza\Timings\Helpers\TimingEstimationProviderHelper;
 use IlBronza\Timings\Interfaces\HasTimingInterface;
 use IlBronza\Timings\Models\TimingBaseModel;
-use IlBronza\Timings\Models\Timingestimation;
+use IlBronza\Timings\Models\TimingEstimation;
 use ReflectionClass;
 
 use function class_basename;
 use function dd;
+use function is_null;
+use function is_numeric;
 
 abstract class TimingEstimator extends BaseTimingHelper
 {
@@ -20,32 +22,56 @@ abstract class TimingEstimator extends BaseTimingHelper
 
 	public function provideTimingModel() : TimingBaseModel
 	{
-		return TimingestimationProviderHelper::provide(
+		return TimingEstimationProviderHelper::provide(
 			$this->getModel()
 		);
 	}
 
+	public function getQuantity()
+	{
+		return $this->getModel()->getQuantityRequired();
+	}
+
 	public function execute() : self
 	{
-		$this->baseHourTime = $this->getBaseTime();
-
-		$coefficients = $this->getCoefficients();
-
-		foreach($coefficients as $coefficient)
-			$this->baseHourTime *= $coefficient;
-		
-		foreach($this->getModelChildren() as $child)
+		try
 		{
-			$childTime = static::calculate($child);
+			$this->processData();
 
-			$this->baseHourTime += $childTime->getHours();
+			foreach($this->getModelChildren() as $child)
+			{
+				$childTimingHelper = static::calculate($child);
+
+				$childTimingHelper->setParent($this);
+
+				foreach($childTimingHelper->getData() as $key => $value)
+				{
+					if(is_null($value))
+						continue;
+
+					if(is_numeric($value))
+						$this->data[$key] = ($this->data[$key] ?? 0) + $value;
+
+					else
+					{
+						dd(['pensa a cosa fare con sto $key', $key, $value]);
+					}
+				}
+
+				$this->baseHourTime += $childTimingHelper->getBaseHourTime();
+			}
+
+			$this->setParameters($this->data);
+
+			$this->setHours(
+				$this->getBaseHourTime(),
+				true
+			);
 		}
-
-		$this->setParameters($coefficients);
-		$this->setHours(
-			$this->baseHourTime,
-			true
-		);
+		catch(\Throwable $e)
+		{
+			$this->setError($e->getMessage());
+		}
 
 		return $this;
 	}

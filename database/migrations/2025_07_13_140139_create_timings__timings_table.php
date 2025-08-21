@@ -21,10 +21,15 @@ return new class extends Migration
 
 		    $table->text('parameters')->nullable();
 
-		    $table->unsignedBigInteger('quantity_required')->nullable();
+		    $table->decimal('quantity', 12, 2)->nullable();
 		    $table->decimal('seconds', 12, 4)->nullable();
 
+		    $table->float('delta_quantity')->nullable();
+		    $table->float('delta_seconds')->nullable();
+		    $table->float('delta')->nullable();
+
 		    $table->string('type',12)->nullable();
+		    $table->string('error')->nullable();
 
 		    $table->softDeletes();
 		    $table->timestamps();

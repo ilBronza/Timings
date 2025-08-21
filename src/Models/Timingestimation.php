@@ -6,9 +6,9 @@ use IlBronza\Timings\Scopes\TimingEstimationScope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
 #[ScopedBy([TimingEstimationScope::class])]
-class Timingestimation extends TimingBaseModel
+class TimingEstimation extends TimingBaseModel
 {
-	static $modelConfigPrefix = 'timingestimation';
+	static $modelConfigPrefix = 'timingEstimation';
 
 	protected $attributes = [
 		'type' => 'estimation',

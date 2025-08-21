@@ -2,9 +2,17 @@
 
 namespace IlBronza\Timings;
 
-use Illuminate\Support\Str;
+use IlBronza\CRUD\Providers\RouterProvider\RoutedObjectInterface;
+use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaPackagesTrait;
 
-class Timings
+class Timings implements RoutedObjectInterface
 {
-	
+	use IlBronzaPackagesTrait;
+
+	static $packageConfigPrefix = 'timings';
+
+	public function manageMenuButtons()
+	{
+
+	}
 }

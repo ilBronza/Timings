@@ -1,9 +1,14 @@
 <?php
 
+use IlBronza\Timings\Http\Parameters\TablesFields\TimingEstimationIndexFieldsGroupParameters;
+use IlBronza\Timings\Http\Parameters\TablesFields\TimingIndexFieldsGroupParameters;
 use IlBronza\Timings\Models\Timing;
-use IlBronza\Timings\Models\Timingestimation;
+use IlBronza\Timings\Models\TimingEstimation;
 
 return [
+
+	'routePrefix' => 'timings.',
+
     'success' => [
         'timeout_ms' => 2500
     ],
@@ -13,16 +18,20 @@ return [
     'warning' => [
         'timeout_ms' => 7500
     ],
-
-
 	'models' => [
 		'timing' => [
 			'table' => 'timings__timings',
-			'class' => Timing::class
+			'class' => Timing::class,
+			'fieldsGroupsFiles' => [
+				'index' => TimingIndexFieldsGroupParameters::class
+			]
 		],
-		'timingestimation' => [
+		'timingEstimation' => [
 			'table' => 'timings__timings',
-			'class' => Timingestimation::class
+			'class' => TimingEstimation::class,
+			'fieldsGroupsFiles' => [
+				'index' => TimingEstimationIndexFieldsGroupParameters::class
+			]
 		],
 	]
 ];

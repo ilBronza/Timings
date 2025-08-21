@@ -13,5 +13,4 @@ class Timing extends TimingBaseModel
 	protected $attributes = [
 		'type' => 'timing',
 	];
-
 }

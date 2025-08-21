@@ -2,7 +2,7 @@
 
 namespace IlBronza\Timings;
 
-use IlBronza\Timings\Helpers\TimingestimationProviderHelper;
+use IlBronza\Timings\Helpers\TimingEstimationProviderHelper;
 use IlBronza\Timings\Interfaces\HasTimingInterface;
 use IlBronza\Timings\Models\TimingBaseModel;
 use Illuminate\Support\Collection;
@@ -18,6 +18,11 @@ use function lcfirst;
 class BaseTimingHelper
 {
 	public TimingBaseModel $timingModel;
+
+	public float $baseHourTime;
+
+	public ? self $parent = null;
+	public array $data;
 
     /**
      * Static name to identify the helper in configuration.
@@ -64,6 +69,15 @@ class BaseTimingHelper
 		return $helper->execute();
 	}
 
+	public function setParent(self $parent): void
+	{
+		$this->parent = $parent;
+
+		$this->getTimingModel()->associateParent(
+			$parent->getTimingModel()
+		);
+	}
+
     /**
      * Calculate timing values using the configuration and model class.
      *
@@ -73,6 +87,12 @@ class BaseTimingHelper
 	static function calculate(HasTimingInterface $model) : self
 	{
 		return static::_execute($model);
+	}
+
+	static function calculateAll(HasTimingInterface $model)
+	{
+		TimingEstimator::calculate($model);
+		TimingCalculator::calculate($model);
 	}
 
 	public function __construct(HasTimingInterface $model)
@@ -88,8 +108,8 @@ class BaseTimingHelper
 	{
 		$this->timingModel = $this->provideTimingModel();
 
-		$this->timingModel->setQuantityRequired(
-			$this->getModel()->getQuantityRequired()
+		$this->timingModel->setQuantity(
+			$this->getQuantity()
 		);
 	}
 
@@ -130,6 +150,16 @@ class BaseTimingHelper
 		);
 	}
 
+	public function setError(string $errorMessage)
+	{
+		$timing = $this->getTimingModel();
+
+		$timing->setError(
+			$errorMessage,
+			true
+		);
+	}
+
 	public function setHours(float $hours, bool $save = false): void
 	{
 		$timing = $this->getTimingModel();
@@ -140,14 +170,27 @@ class BaseTimingHelper
 		);
 	}
 
-	public function getHours() : float
+//	public function getHours() : float
+//	{
+//		return $this->baseHourTime;
+//	}
+
+	public function getBaseHourTime() : ? float
 	{
-		return $this->baseHourTime;
+		if(isset($this->baseHourTime))
+			return $this->baseHourTime;
+
+		return null;
 	}
 
 	static function getHelperConfigTypeName() : string
 	{
 		return static::$helperTypeName;
+	}
+
+	public function getData() : array
+	{
+		return $this->data;
 	}
 
 }
