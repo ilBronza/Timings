@@ -117,4 +117,176 @@ class TimingBaseModel extends TimingBasePackageModel
 	{
 		return $query->whereNotNull('error');
 	}
+
+	public function isClosed() : bool
+	{
+		return ! $this->getError();
+	}
+
+	public function getError() : ? string
+	{
+		return $this->error;
+	}
+
+    public function getCalculatedAt() : ? string
+    {
+        if($this->updated_at)
+            return $this->updated_at->diffForHumans(null, null, true);
+
+        return null;
+    }
+
+    static public function getFormattedSeconds(int $seconds = null, bool $showSeconds = true)
+    {
+        if(! $seconds)
+            return '-';
+
+        $pieces = [];
+
+        if($hours = floor($seconds / 3600))
+            $pieces[] = $hours . 'h';
+
+        $residualSeconds = $seconds % 3600;
+
+        $minutes = floor($residualSeconds / 60);
+
+        if($hours || $minutes)
+            $pieces[] = $minutes . '\'';
+
+        if($showSeconds)
+            $pieces[] = $residualSeconds % 60 . '"';            
+
+        return implode(' ', $pieces);
+    }
+
+	public function getMachineInitializationString(bool $showSeconds = true)
+	{
+		return $this->getFormattedSeconds(
+			$this->getMachineInitialization(),
+			$showSeconds
+		);
+	}
+
+    public function getHumanInitializationString(bool $showSeconds = true)
+    {
+        return $this->getFormattedSeconds(
+            $this->getHumanInitialization(),
+			$showSeconds
+        );
+    }
+
+    public function getMachineProductionString(bool $showSeconds = true)
+    {
+        return $this->getFormattedSeconds(
+            $this->getMachineProduction(),
+            $showSeconds
+        );
+    }
+
+    public function getHumanProductionString(bool $showSeconds = true)
+    {
+        return $this->getFormattedSeconds(
+            $this->getHumanProduction(),
+            $showSeconds
+        );
+    }
+
+    public function getMachinePerProductString(bool $showSeconds = true)
+    {
+        return $this->getFormattedSeconds(
+            ceil($this->getMachinePerProduct()),
+            $showSeconds
+        );        
+    }
+
+    public function getHumanPerProductString(bool $showSeconds = true)
+    {
+        $value = $this->getHumanPerProduct();
+
+        if($value > 0)
+            $value = ceil($value);
+
+        return $this->getFormattedSeconds(
+        	$value,
+            $showSeconds
+        );
+    }
+
+    public function getMachinePerProduct()
+    {
+		return null;
+    }
+
+    public function getHumanPerProduct()
+    {
+		return null;
+    }
+
+	public function getMachineTotalSeconds()
+	{
+		if(isset($this->parameters['machine_total_seconds']))
+			return $this->parameters['machine_total_seconds'];
+
+		return null;
+	}
+
+
+	public function getHumanProduction()
+	{
+		if(isset($this->parameters['human_production_seconds']))
+			return $this->parameters['human_production_seconds'];
+
+		return null;
+	}
+
+    public function getMachineProduction()
+    {
+		if(isset($this->parameters['machine_production_seconds']))
+			return $this->parameters['machine_production_seconds'];
+
+		return null;    	
+    }
+
+	public function getMachineInitialization()
+	{
+		if(isset($this->parameters['machine_initialization_seconds']))
+			return $this->parameters['machine_initialization_seconds'];
+
+		return null;
+	}
+
+	public function getHumanInitialization()
+	{
+		if(isset($this->parameters['human_initialization_seconds']))
+			return $this->parameters['human_initialization_seconds'];
+
+		return null;
+	}
+
+	public function getHumanTotal()
+	{
+		if(isset($this->parameters['human_total_seconds']))
+			return $this->parameters['human_total_seconds'];
+
+		return null;
+	}
+
+
+
+    public function getMachineTotalString(bool $showSeconds = true)
+    {
+        return $this->getFormattedSeconds(
+            $this->getMachineTotalSeconds(),
+            $showSeconds
+        );
+    }
+
+	public function getHumanTotalString(bool $showSeconds = true)
+	{
+		return $this->getFormattedSeconds(
+			$this->getHumanTotal(),
+			$showSeconds
+		);
+	}
+
 }

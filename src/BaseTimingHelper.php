@@ -190,7 +190,10 @@ class BaseTimingHelper
 
 	public function getData() : array
 	{
-		return $this->data;
+		if(isset($this->data))
+			return $this->data;
+
+		return [];
 	}
 
 }

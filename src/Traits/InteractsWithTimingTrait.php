@@ -52,7 +52,6 @@ trait InteractsWithTimingTrait
 		return $this->getTimingEstimation()?->getSeconds();
 	}
 
-
 	public function scopeWithEstimationMachineSeconds($query)
 	{
 		$table = TimingEstimation::gpc()::make()->getTable();

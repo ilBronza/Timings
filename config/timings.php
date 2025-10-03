@@ -7,6 +7,14 @@ use IlBronza\Timings\Models\TimingEstimation;
 
 return [
 
+
+	'datatableFieldWidths' => [
+		'timingEstimator' => [
+			'datatableFieldMinutes' => '4em'
+		]
+	],
+
+
 	'routePrefix' => 'timings.',
 
     'success' => [
