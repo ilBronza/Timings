@@ -13,4 +13,12 @@ class Timing extends TimingBaseModel
 	protected $attributes = [
 		'type' => 'timing',
 	];
+
+	public function getPiecesPerHourAttribute($value) : ? float
+	{
+		if($value)
+			return $value;
+
+		return round($this->getQuantity() / $this->getMachineTotalSeconds() * 3600, 2);
+	}
 }

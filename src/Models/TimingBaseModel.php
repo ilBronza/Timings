@@ -230,6 +230,11 @@ class TimingBaseModel extends TimingBasePackageModel
 		return null;
 	}
 
+	public function getMachineTotalSecondsAttribute()
+	{
+		return $this->getMachineTotalSeconds();
+	}
+
 
 	public function getHumanProduction()
 	{
@@ -247,12 +252,30 @@ class TimingBaseModel extends TimingBasePackageModel
 		return null;    	
     }
 
+	public function getMachineProductionSecondsAttribute()
+	{
+		return $this->getMachineProduction();
+	}
+
+	public function getMachineInitializationSecondsAttribute()
+	{
+		return $this->getMachineInitialization();
+	}
+
 	public function getMachineInitialization()
 	{
 		if(isset($this->parameters['machine_initialization_seconds']))
 			return $this->parameters['machine_initialization_seconds'];
 
 		return null;
+	}
+
+	public function getMachineTotalSecondsPerProductAttribute() : float
+	{
+		if(! $quantity = $this->getQuantity())
+			return 0;
+
+		return round($this->getMachineTotalSeconds() / $quantity, 2);
 	}
 
 	public function getHumanInitialization()
@@ -270,8 +293,6 @@ class TimingBaseModel extends TimingBasePackageModel
 
 		return null;
 	}
-
-
 
     public function getMachineTotalString(bool $showSeconds = true)
     {

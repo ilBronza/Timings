@@ -15,7 +15,7 @@ class CrudTimingsCalculatorController extends CRUD
 {
 	public $allowedMethods = [
 		'calculateTimingsBy',
-		'calculateRootTimingsBy'
+		'calculateRootTimingsBy',
 	];
 
 	public function calculateModelTimingsAndReturnBack($model)
