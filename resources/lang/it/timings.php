@@ -3,5 +3,5 @@
 return [
 	'manage' => 'Gestisci tempistiche',
 	'index' => 'Indice',
-	'calculateOrders' => 'Calcola Ordini',
+		'calculateOrders' => 'Calcola elaborati'
 ];
