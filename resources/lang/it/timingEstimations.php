@@ -5,4 +5,6 @@ return [
 	'timingEstimations' => 'Stime',
 	'manage' => 'Gestisci stime',
 	'index' => 'Indice stime',
+	
+	'calculateOrders' => 'Calcola Ordini',
 ];
