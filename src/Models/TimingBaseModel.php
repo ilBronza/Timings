@@ -230,7 +230,7 @@ class TimingBaseModel extends TimingBasePackageModel
 		return null;
 	}
 
-	public function getMachineTotalSecondsAttribute()
+	public function getMachineTotalSecondsAttribute() : ? float
 	{
 		return $this->getMachineTotalSeconds();
 	}
@@ -252,17 +252,17 @@ class TimingBaseModel extends TimingBasePackageModel
 		return null;    	
     }
 
-	public function getMachineProductionSecondsAttribute()
+	public function getMachineProductionSecondsAttribute() : ? float
 	{
 		return $this->getMachineProduction();
 	}
 
-	public function getMachineInitializationSecondsAttribute()
+	public function getMachineInitializationSecondsAttribute() : ? float
 	{
 		return $this->getMachineInitialization();
 	}
 
-	public function getMachineInitialization()
+	public function getMachineInitialization() : ? float
 	{
 		if(isset($this->parameters['machine_initialization_seconds']))
 			return $this->parameters['machine_initialization_seconds'];

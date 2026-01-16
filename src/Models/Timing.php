@@ -19,6 +19,9 @@ class Timing extends TimingBaseModel
 		if($value)
 			return $value;
 
+		if(! $this->getMachineTotalSeconds())
+			return null;
+
 		return round($this->getQuantity() / $this->getMachineTotalSeconds() * 3600, 2);
 	}
 }
