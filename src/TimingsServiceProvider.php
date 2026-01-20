@@ -3,6 +3,8 @@
 namespace IlBronza\Timings;
 
 use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaServiceProviderPackagesTrait;
+use IlBronza\Timings\Console\Commands\TimingCalculateByClass;
+use IlBronza\Timings\Console\Commands\TimingEstimationsCalculateByClass;
 use Illuminate\Support\ServiceProvider;
 
 class TimingsServiceProvider extends ServiceProvider
@@ -80,6 +82,9 @@ class TimingsServiceProvider extends ServiceProvider
         ], 'timings.views');*/
 
         // Registering package commands.
-        // $this->commands([]);
+        $this->commands([
+            TimingEstimationsCalculateByClass::class,
+            TimingCalculateByClass::class
+        ]);
     }
 }

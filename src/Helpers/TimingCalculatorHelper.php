@@ -9,11 +9,13 @@ use Illuminate\Support\Collection;
 
 class TimingCalculatorHelper
 {
+	static int $limit = 200;
+
 	static function calculateByClass(string $class)
 	{
 		$class = ModelFinderHelper::getFullQualifiedClassByClassName($class);
 
-		$elements = $class::whereDoesntHave('timing')->orderByDesc('created_at')->get();
+		$elements = $class::whereDoesntHave('timing')->orderByDesc('created_at')->take(static::$limit)->get();
 
 		// $wrongElements = $class::whereHas('timingEstimation', function($query)
 		// 	{
