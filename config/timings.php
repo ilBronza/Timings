@@ -17,6 +17,15 @@ return [
 
 	'routePrefix' => 'timings.',
 
+	'defaultRoles' => [
+		'superadmin',
+		'administrator',
+		'timings',
+	],
+
+	'routeRoles' => [
+	],
+
     'success' => [
         'timeout_ms' => 2500
     ],

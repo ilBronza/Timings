@@ -10,7 +10,7 @@ use IlBronza\Timings\Http\Controllers\Timings\CrudTimingsCalculatorWrongControll
 use IlBronza\Timings\Http\Controllers\Timings\TimingIndexController;
 
 Route::group([
-	'middleware' => ['web', 'auth', 'role:superadmin|administrator|timings'],
+	'middleware' => ['web', 'auth', 'timings.roles'],
 	'prefix' => 'timings-management',
 	'as' => config('timings.routePrefix')
 ], function ()

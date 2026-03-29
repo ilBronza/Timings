@@ -3,6 +3,7 @@
 namespace IlBronza\Timings;
 
 use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaServiceProviderPackagesTrait;
+use IlBronza\Timings\Http\Middleware\TimingsMiddlewareRolesPermissions;
 use IlBronza\Timings\Console\Commands\TimingCalculateByClass;
 use IlBronza\Timings\Console\Commands\TimingEstimationsCalculateByClass;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +23,8 @@ class TimingsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'timings');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 	    $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
+        $this->app['router']->aliasMiddleware('timings.roles', TimingsMiddlewareRolesPermissions::class);
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
