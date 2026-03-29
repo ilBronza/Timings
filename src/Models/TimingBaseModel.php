@@ -225,7 +225,7 @@ class TimingBaseModel extends TimingBasePackageModel
 	public function getMachineTotalSeconds()
 	{
 		if(isset($this->parameters['machine_total_seconds']))
-			return $this->parameters['machine_total_seconds'];
+			return floor($this->parameters['machine_total_seconds']);
 
 		return null;
 	}
@@ -236,10 +236,18 @@ class TimingBaseModel extends TimingBasePackageModel
 	}
 
 
+	public function getHumanInitializationSecondsAttribute()
+	{
+		if(isset($this->parameters['human_initialization_seconds']))
+			return floor($this->parameters['human_initialization_seconds']);
+
+		return null;
+	}
+
 	public function getHumanProduction()
 	{
 		if(isset($this->parameters['human_production_seconds']))
-			return $this->parameters['human_production_seconds'];
+			return floor($this->parameters['human_production_seconds']);
 
 		return null;
 	}
@@ -247,7 +255,7 @@ class TimingBaseModel extends TimingBasePackageModel
     public function getMachineProduction()
     {
 		if(isset($this->parameters['machine_production_seconds']))
-			return $this->parameters['machine_production_seconds'];
+			return floor($this->parameters['machine_production_seconds']);
 
 		return null;    	
     }
@@ -262,10 +270,15 @@ class TimingBaseModel extends TimingBasePackageModel
 		return $this->getMachineInitialization();
 	}
 
+	public function getHumanProductionSecondsAttribute() : ? float
+	{
+		return $this->getHumanProduction();
+	}
+
 	public function getMachineInitialization() : ? float
 	{
 		if(isset($this->parameters['machine_initialization_seconds']))
-			return $this->parameters['machine_initialization_seconds'];
+			return floor($this->parameters['machine_initialization_seconds']);
 
 		return null;
 	}
@@ -281,7 +294,7 @@ class TimingBaseModel extends TimingBasePackageModel
 	public function getHumanInitialization()
 	{
 		if(isset($this->parameters['human_initialization_seconds']))
-			return $this->parameters['human_initialization_seconds'];
+			return floor($this->parameters['human_initialization_seconds']);
 
 		return null;
 	}
@@ -289,7 +302,7 @@ class TimingBaseModel extends TimingBasePackageModel
 	public function getHumanTotal()
 	{
 		if(isset($this->parameters['human_total_seconds']))
-			return $this->parameters['human_total_seconds'];
+			return floor($this->parameters['human_total_seconds']);
 
 		return null;
 	}

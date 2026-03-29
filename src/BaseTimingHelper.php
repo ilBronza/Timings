@@ -52,6 +52,23 @@ class BaseTimingHelper
 		return 'timings.helpers.models.' . $modelClassName. '.' . static::getHelperConfigTypeName();
 	}
 
+	static function instantiate(HasTimingInterface $model) : self
+	{
+		//get studly model class basename
+		$modelClassName = lcfirst(
+			class_basename($model)
+		);
+
+		$configString = static::getConfigString($modelClassName);
+
+		if (! $helperClass = config($configString))
+			throw new \Exception('Configuration for timing helper not found: ' . $configString);
+
+		$helper = new $helperClass($model);
+
+		return $helper;
+	}
+
 	static function _execute(HasTimingInterface $model) : self
 	{
 		//get studly model class basename

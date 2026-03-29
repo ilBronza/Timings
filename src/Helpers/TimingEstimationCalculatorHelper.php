@@ -10,7 +10,7 @@ use IlBronza\Timings\Models\TimingEstimation;
 
 class TimingEstimationCalculatorHelper
 {
-	static int $limit = 200;
+	static int $limit = 100;
 
 	static function calculateByClass(string $class)
 	{
