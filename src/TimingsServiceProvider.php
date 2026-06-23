@@ -22,7 +22,7 @@ class TimingsServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'timings');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'timings');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-	    $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+	    $this->loadRoutesFrom(__DIR__ . '/../routes/timings.php');
 
         $this->app['router']->aliasMiddleware('timings.roles', TimingsMiddlewareRolesPermissions::class);
 
